@@ -54,3 +54,113 @@ For:
 
            **List o formata como uma listagem de 0 a 9,
            formato não usado em for.
+    continue: Quando encontrado dentro de um loop, o continue faz 
+    com que o programa pule o restante da iteração atual e avance
+    para a próxima iteração do loop. Se estivermos dentro de um loop
+    for, o programa irá para o próximo valor na sequência de iteração.
+    Se estivermos dentro de um loop while, o programa avalia novamente
+    a condição do while e, se verdadeira, inicia a próxima iteração
+
+            i = 0
+            n = 0
+            while i < 5:
+            i = 1 + i
+            if i == 3:
+                continue
+            n += i
+            print(i)
+    **Ele não imprime nada em i == 3, pois pula pro próximo passo da iteração 
+    como existe apenas uma estrutura. s
+
+While: 
+    Pode ser usado de duas maneiras: 
+    1.  while opcao != 3: 
+            if opcao == 1: 
+                print("Sacando...")
+                break
+            else:
+                print("Depositando...")
+                break
+
+    2.  while opcao != 3: 
+            if opcao == 1: 
+                print("Sacando...")
+                break
+            else:
+                print("Depositando...")
+                break
+        else: 
+            print("Saindo...")
+
+Strings: 
+    Para acessar cada caractere de uma string, precisamos apenas acessá-lo como um vetor: 
+
+        palavra[0]
+
+    Métodos: 
+
+        Letras 
+            1. .upper() - todas maiúsculas. 
+            2. .lower() - todas minúsculas. 
+            3. .title() - primeira letra da string fica maiúscula. 
+
+        Espaços brancos 
+            1. .strip() - espaços da esquerda e direita.
+            2. .lstrip() - apenas espaço da esquerda. 
+            3. .rstrip() - apenas espaço da direita. 
+
+        Junções e centralizações
+            1. .center(numero a ocupar, caractere que estara ao redor da palavra )
+                curso.center(10, "+") --> ++Python++
+            2. (caractere que será a junção).join(palavra a ser juntada)
+                '.'.join(curso) --> P.y.t.h.o.n
+                curso.join('.') --> . 
+                curso.join('...') --> . .Python.Python.
+    
+   Interpolação de variáveis: substituição de variáveis no método print. 
+    1. Usando %
+        - Compatível, porém muito complexa. 
+
+        print("João tem %d anos" %(nome))
+
+    2. Utilizando método 'format':
+        print("Eu gosto de {} e {}!".format(banana, maca))
+
+        print("Eu gosto de {1} e {0}!".format(maca, banana))
+
+        print("Eu gosto de {fruta1} e {fruta2}!".format(fruta1='maca', fruta2='banana'))
+
+        **Podemos definir um dicionário e fazer o que foi feito no passo acima, porem usando 
+        .format(**frutas) --> sendo frutas o nome do dicionário
+
+    3. Utilizando 'f strings'
+
+        print(f"Eu gosto de {maca} e {banana}!")
+
+    Formatação com fstring: 
+
+        print(f"Valor de PI: {PI:.2f}") -- duas casas dps da vírgula 
+
+        print(f"Valor de PI: {PI:10.2f}") -- duas casas dps da vírgula e 10 casas úteis antes 
+
+    Fatiamento de strings: retorna substrings
+        - [start:stop:step]
+        --> start é a casa inicial 
+        --> stop é a casa final 
+        --> step é o obstáculo -> step = 2 --> pula de duas em duas casas
+
+
+        b = "Hello, World!"
+        print(b[2:5]) --> "llo,"
+        print(b[:5]) --> "Hello,"
+        print(b[2:]) --> "lo, World!"
+        print(b[:]) --> "Hello, World!"
+        print(b[::-1]) -->  # Saída: lagel é nohtyP (string invertida)
+
+
+    Strings de múltiplas linhas
+        Definidas informando 3 aspas simples ou dulas durante a atribuição:
+            """DASDAS
+            DASDASDA
+            DASDASDDA"""
+        **Espaços em branco são considerados
