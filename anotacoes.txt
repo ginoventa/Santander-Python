@@ -1,0 +1,56 @@
+Modo interativo
+    Maneira de testar suas variáveis e scripts antes mesmo
+    de rodar o código 
+    Existem duas maneiras de fazer isso: 
+        1. Ambiente interativo genérico: 'python' no terminal
+        2. Ambiente interativo para programa: 'python nome.python'
+        no termina. 
+    Além disso temos os comandos: dir() e help(), que aceitam
+    parâmetros e nos informam as bibliotecas usadas por um objeto,
+    e como utilizá-las, respectivamente. 
+
+Variáveis   
+    Declarações: 
+        1. age = 23 
+           name = ' Guilherme'
+        2. age, name = (23, 'Guilherme')
+    Tipos: 
+        Python NÃO TEM constantes - normalmente usamos letras maiúsculas
+        para convencionar isso. 
+    Inteiros: 
+        Dividir com // mantém o estado de inteiro de um número. 
+
+Print: 
+    Podemos adicionar como será formatado o final. 
+        print(...,..., end='\n') -- pula linha após exibir todas as variáveis
+    Podemos adicionar como as variáveis serão separadas.
+        print(...,...,sep='#')
+
+Operadores Lógicos:
+    Usamos as seguintes palavras: 
+        Or, and, not, is, is not, in, not in. 
+    Usamos os seguintes símbolos:
+        >, <, =, (). 
+If: 
+   1.   if condição: 
+        elif condição:
+        else:
+   
+   2.   retorno_verdadeiro if condição else retorno_falso
+        "Maior" if num>5 else "Menor"
+
+For: 
+    É usado para percorrer um objeto iterável ou para repetir 
+    uma estrutura passível de repetição. 
+        1. for letra in texto: 
+                if letra == 'a'
+                    ...
+            Aqui estamos percorrendo a string texto, sendo 
+            letra os valores atuais. 
+    Usamos range para obter uma sequência com início e fim. 
+        2. range(start, stop[,step]) -> range(i,j) --> i, ..., j-1
+           list(range(stop)) -> list(range(10)) --> 0,...,9
+           range(stop) --> range(9) --> 0, 9
+
+           **List o formata como uma listagem de 0 a 9,
+           formato não usado em for.
