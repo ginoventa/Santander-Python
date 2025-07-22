@@ -260,3 +260,46 @@ Tuplas: São as 'irmãs' da lista. Porém, são imutáveis. **Podem armazenar ob
         carros = ("gol",) 
         print(isinstance(carros1, tuple)) --> False --> Precisa da vírgula 
         print(isinstance(carros, tuple)) --> True
+
+Conjuntos: Coleção de objetos que não possui objetos repetidos. Usamos o método set para defini-los ou para eliminar itens 
+        duplicados de um iterável. **Não tem ordem, ou seja, podemos ter diferentes ordem em diferentes sistemas!!
+
+********Os conjuntos em Python não suportam indexação e nem fatiamento, caso queira acessar os seus valores é necessário converter o conjunto para lista.
+            meu_conjunto = {1, 2, 3, 4, 5}
+
+            # Tentativa de indexação (gera erro):
+            # print(meu_conjunto[0]) # TypeError: 'set' object is not subscriptable
+
+            # Convertendo para lista:
+            meu_conjunto_lista = list(meu_conjunto)
+            print(meu_conjunto_lista[0])  # Saída: 1
+
+            # Convertendo para tupla:
+            meu_conjunto_tupla = tuple(meu_conjunto)
+            print(meu_conjunto_tupla[0]) # Saída: 1
+
+        Criando conjuntos: 
+            1. set() - Elimina duplicatas
+                numeros = set([1,2,3,1,4]) --> {1,2,3,4} **Eliminou duplicações
+                abacaxi = set("abacaxi") --> {"b","a","c","i","x"}
+            2. Chaves - Não elimina duplicatas
+                numeros = {1,2,3,4,5,6,3,1,2}
+                abacaxi = {"abacaxi"}
+
+        Função enumerate: Mesma maneira da lista
+
+        Métodos de Set(): 
+            1. Union - conjunto_a.union(conjunto_b)
+            2. Intersection - conjunto_a.intersection(conjunto_b)
+            3. Difference - conjunto_a.difference(conjunto_b) --> Elementos que está apenas no invocador
+            4. Symetric Difference - conjunto_a.symetric_difference(conjunto_b) --> Todos os elementos que não estão na intersecção 
+            5. IsSubset - conjunto_a.issubset(conjunto_b) --> Os elementos de A estão em B?
+            6. IsSuperset - conjunto_a.issuperset(conjunto_b) --> Os elementos de B estão em A?
+            7. IsDisjoint - conjunto_a.isdisjoint(conjunto_b) --> Todos os elementos de B não estão em A?
+            8. Add - conjunto_a.add(elemento) --> Adiciona elementos não existentes. 
+            9. Clear
+            10. Copy
+            11. Discard - conjunto_a.discard(elemento) --> Descarta certo elemento, não da  erros com não existentes. 
+            12. Pop - Tira os primeiros valores, oq é incomum!!!!!!!!!!!!
+            13. Remove - conjunto_a.remove(elemento) --> Mesmo que discar, porém dá erros quando elemento não existe. 
+            14. Len - conjunto_a.len() --> Tamanho da estrutura
