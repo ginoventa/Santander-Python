@@ -164,3 +164,99 @@ Strings:
             DASDASDA
             DASDASDDA"""
         **Espaços em branco são considerados
+
+Listas: Armazenam, de maneira sequencial, qualquer tipo de objeto ou dado. 
+    Criação de listas -- 
+        1. Usando o construtor 'list'(iterável)
+            nomes = list("python") --> ['p', 'y', 't', 'h', 'o', 'n']
+
+        2. Usando a função 'range'
+            numeros = list(range(10)) --> [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+        3. Colocando valores separados por vírgulas dentro de colchetes. 
+            frutas = ["uva","banana","pera"]  --> ['uva', 'banana', 'pera']
+
+    Acessando listas - São sequencias, podemos acessar seus dados pelos índices. 
+        Indices positivos: começa em 0
+            frutas[0] = 'uva'
+        Indices negativos: começa em -1 
+            frutas[-3] = 'uva'
+    
+    Listas aninhadas - Listas que armazenam outras listas. 
+        Matriz = [
+            [1,2,3]
+            [4,5,6]
+            [6,7,8]
+        ]
+
+        Matriz[0][0] = 1
+
+    Fatiamento de listas - pega valores específicos do intervalo determinado. (mesmo funcionamento das strings)
+
+    Iteração em lista - Apenas utilizando for
+        frutas = ["uva","banana","pera"]
+        for fruta in frutas -- fruta admite valores de indice crescente a cada passo da iteração
+    
+    Enumeração - Usado para saber o índice do objeto desejado. Retorna dois valores, o da lista e um número (índice). 
+        frutas = ["uva","banana","pera"]
+        for indice, fruta in enumerate(frutas): 
+            print(f"{indice}: {fruta}")
+**precisamos ter essas duas variáveis no for, caso contrário será inútil 
+
+    Compreensão de listas - sintaxe curta para criar nova lista baseada em uma já existente. 
+    Aplicando filtro ou modificando os valores já existentes. 
+        1. Filtro: complicado X facilitado
+            a.  numeros = [1,2,3,4]
+                pares = []
+
+                for numero in numeros: 
+                    if numero % 2 == 0: 
+                        pares.append(numero)
+
+            b.  numeros = [1,2,3,4]
+                pares = [numero for numero in numeros if numero % 2 == 0]
+        
+        2. Modificando: complicado X facilitado
+            a.  numeros = [1,2,3,4]
+                quadrado = []
+
+                for numero in numeros: 
+                    quadrado.append(numero**2)
+
+            b.  numeros = [1,2,3,4]
+                quadrado = [numero**2 for numero in numeros]
+
+    Métodos da lista: 
+        1. Append: nome_lista.append(objeto) (sem retornos)
+        2. Clear: nome_lista.clear() (sem retornos)
+        3. Copy: nova_instancia = nome_lista.copy() (tem retornos)
+        4. Count: nome_lista.count(objeto_a_ser_contado) (sem retornos)
+        5. Extend: nome_lista.extend(nome_lista_a_ser_adicionada) -- Não guarda nova lista, apenas extende (sem retornos)
+        6. Index: nome_lista.index(objeto_a_ser_achado) -- Retorna indice da primeira ocorrencia (sem retornos)
+        7. Pop: nome_lista.pop() -- Como uma pilha, retira o último elemento adicionado (sem retornos)
+        8. Reverse: nome_lista.reverse() -- Inverte lista (sem retornos)
+        9. Sort: nome_lista.sort(key = {lambda x: len(x) -- função anônima, retorna o número de letras}, reverse = {true ou false} ) -- Arruma lista (sem retornos) 
+        10. Sorted: sorted(nome_lista, key = {lambda x: len(x) -- função anônima, retorna o número de letras}, reverse = {true ou false} ) (tem retornos)
+   
+    IsInstance: Verificação de que uma estrutura é uma lista
+        carros = ["gol"] 
+        print(isinstance(carros, list)) --> True
+
+Tuplas: São as 'irmãs' da lista. Porém, são imutáveis. **Podem armazenar objetos mutáveis, como as listas. 
+    Criação de tuplas: 
+        1. Com 'tuple' 
+            tuple('python')
+
+        2. Com valores separados por vírgulas em parentêses. 
+            frutas = ('uva','abacaxi',) --> **Devemos ter última vírgula, caso contrário teremos problemas para o interpretador. 
+    
+    Acessando tuplas: 
+        frutas[0] = frutas[-2] = 'uva'
+    
+    Tuplas aninhadas: Não irei repetir, o funcionamento é igual.
+    Fatiamento: Também pode ser aplicado a tuplas, uma vez que só impacta nossa visualização dela.
+    IsInstance: Verificação de que uma estrutura é uma tupla
+        carros1 = ("Gol")
+        carros = ("gol",) 
+        print(isinstance(carros1, tuple)) --> False --> Precisa da vírgula 
+        print(isinstance(carros, tuple)) --> True
