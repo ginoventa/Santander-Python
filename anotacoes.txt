@@ -303,3 +303,50 @@ Conjuntos: Coleção de objetos que não possui objetos repetidos. Usamos o mét
             12. Pop - Tira os primeiros valores, oq é incomum!!!!!!!!!!!!
             13. Remove - conjunto_a.remove(elemento) --> Mesmo que discar, porém dá erros quando elemento não existe. 
             14. Len - conjunto_a.len() --> Tamanho da estrutura
+
+
+
+Dicionários: Conjunto não ordenado de pares chave. Onde cada chave deve ter um valor.
+    Criação de um dictionaire: 
+        Delimitados por {}, devem conter uma lista do tipo 'chave:valor' separada por vírgulas. 
+        
+        ex. 
+            1. dicionario = {"giovanna":"noventa", "sandy":"junior"} 
+            2. dicinario = dict(nome="Giovanna", idade=28)
+            3. dicionario["nota"] = "10" *Adiciona esse atributo ao dicionário
+
+    Acesso de dados: 
+        Podemos acessar e modificar o valor por: 
+            Acessando -- dicionario["giovanna"] --> noventa
+            Acessando e Modificando -- dicionario["giovanna"] = nascimento 
+    
+    Dicionários aninhados: possível e usado. 
+        people = {1: {'name': 'John', 'age': '27', 'sex': 'Male'},
+                  2: {'name': 'Marie', 'age': '22', 'sex': 'Female'}}
+
+        Acessando -- people["1"]["name"]
+
+    Iterar dicionários: 
+        Podemos percorrer o dicionário com for.
+
+        1. Acessando dicionários aninhados: 
+            a. for chave in people: *Retorna apenas a chave e os valores dessa cheve, nesse caso, todo o outro dicionário. 
+                print(chave, people[chave])
+
+            b. for chave, valor in people.items():
+                print(chave, valor) 
+
+    Métodos do dict: 
+        1. Clear: nome_dicionario.clear()
+        2. Copy: nome_novo = nome_dicionario.copy() (retorna dicionario à cópia)
+        3. FromKeys: nome_dicionario.fromkeys([chaves desejadas], valor de redefinição) **Redefine o valor de certas chaves 
+        4. Get: nome_dicionario.get(chave, valores) **
+        5. Items: nome_dicionario.items() **Pega todos os valores e chaves 
+        6. Keys: nome_dicionario.keys() 
+        7. Pop: nome_dicionario.pop(chave ou valor a ser retirado)
+        8. PopItem: nome_dicionario.popitem(tira chave)
+        9. SetDefault: nome_dicionario.setdefault(chave:valor) -- Define uma chave com um valor padrão 
+        10. Update: nome_dicionario.update() -- Atualiza valor de chave
+        11. Values: nome_dicionario.values()
+        12. In: Podemos testar se chaves existem 
+        13. Del: del nome_dicionario[chave][chave]
