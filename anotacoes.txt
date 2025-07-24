@@ -350,3 +350,42 @@ Dicionários: Conjunto não ordenado de pares chave. Onde cada chave deve ter um
         11. Values: nome_dicionario.values()
         12. In: Podemos testar se chaves existem 
         13. Del: del nome_dicionario[chave][chave]
+
+
+Funções: 
+    Parâmetros especiais: 
+        Por padrão, podemos usar a posição ou o nome para passar um valor para uma função. De modo que, 
+        f(199,Loiro) ou f(cor=Loiro, valor=199). Porém, podemos expandir isso para: posição, nome e po
+        sição e nome. 
+
+        1. Positional Only: Antes da barra só aceita por posição, ou seja, sem nome. 
+            def criar_carro(modelo, ano, placa, /, marca, motor, combustivel): 
+                print(modelo, ano, placa, marca, motor, combustivel)
+
+                criar_carro("Palio", 1999, "ABC-1234", "Fiat", "1.0", combustivel="Gasolina") #Válida
+                criar_carro(modelo="Palio", ano=1999, placa="ABC-1234", marca="Fiat", motor="1.0", combustivel="Gasolina") #Inválida
+        
+        2. Keyword Only: Sempre precisa de nomes. 
+            def criar_carro(*,modelo, ano, placa, marca, motor, combustivel): 
+                print(modelo, ano, placa, marca, motor, combustivel)
+
+                criar_carro(modelo="Palio", ano=1999, placa="ABC-1234", marca="Fiat", motor="1.0", combustivel="Gasolina") #Válida
+                criar_carro("Palio", 1999, "ABC-1234", marca="Fiat", motor="1.0", combustivel="Gasolina") #Inválida
+
+        3. Keyword and positional only: Tudo depois da barra só aceita termos com nome. 
+            def criar_carro(modelo, ano, placa, /, *,marca, motor, combustivel): 
+                print(modelo, ano, placa, marca, motor, combustivel)
+
+                criar_carro("Palio", 1999, "ABC-1234", marca="Fiat", motor="1.0", combustivel="Gasolina") #Inválida
+                criar_carro(modelo="Palio", ano=1999, placa="ABC-1234", marca="Fiat", motor="1.0", combustivel="Gasolina") #Inválida
+
+        ==> def f(pos1, pos2, /, pos_or_kwd, *, kwd1, kwd2)
+    
+    Parâmetros especiais em funções: 
+        1. Uso de Argumentos em Funções:
+            Em Python, você pode definir funções que aceitam argumentos posicionais e de palavra-chave.
+            No exemplo dado, `def funcao(*args, **kw):`, a função `funcao` aceita argumentos posicionais (`*args`) e argumentos de palavra-chave (`**kw`).
+            Ao executar `funcao("python", 2022, curso="dio")`, `args` conterá `("python", 2022)` e `kw` conterá `{"curso": "dio"}`.    
+         => *args e **kwargs controlam quantos argumentos podem ser passados. 
+                *args → junta argumentos posicionais "extras" em uma tupla
+                **kwargs → junta argumentos nomeados "extras" em um dicionário
