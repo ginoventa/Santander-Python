@@ -389,3 +389,12 @@ Funções:
          => *args e **kwargs controlam quantos argumentos podem ser passados. 
                 *args → junta argumentos posicionais "extras" em uma tupla
                 **kwargs → junta argumentos nomeados "extras" em um dicionário
+
+
+    Alterações de variáveis globais em funções: 
+        - Para alterar uma variável global dentro de uma função, precisamos redeclarara como global. Para apenas acessá-la, não precisamos fazer isso. 
+        Ex. 
+            saque 
+
+            def sacar(): 
+                global saque 
