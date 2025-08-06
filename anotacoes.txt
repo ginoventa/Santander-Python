@@ -398,3 +398,31 @@ Funções:
 
             def sacar(): 
                 global saque 
+
+
+Programação Orientada A Objetos (POO): É um estilo de programação. ABstrai problemas em objetos reais do mundo
+    facilitando o entendimento do código e tornando-o mais modular e extensível. 
+
+    Conceitos: 
+        - Classe: Define características (campos) e comportamentos (métodos) de um objeto pertencente a ela. 
+            class Cachorro: 
+                def __init__(self** Define objeto sem precisar de parâmetros, nome, cor, acordado=True): **Construtor
+                    self.nome = nome 
+                    self.cor = cor 
+                    self acordado = acordado
+                def latir(self):    
+                    print("AuAu")
+
+        - Objeto: São instancias de uma classe que terão suas características e comportamentos definidos por ela.  
+            cao = Cachorro("chappie", "amarelo", False) **Criação de instância
+            cao.latir() --> AuAu
+
+        - Construtores: É um método executado quando uma nova instância da classe é criada. Inicializamos o estado do nosso objeto. 
+        Para declarar método utilizados a palavra '__init__': 
+            def __init__ (self, "parâmetros"): 
+
+        - Destrutores: É um método executado quando uma instância é destruída. O Python tem um coletor de lixo, o que otimiza o 
+        gerenciamento de memória. Para declarar esse método utilizamos a paralavra '__del__':
+            def __del__(self): 
+                pode ter alterações 
+            del cao 
