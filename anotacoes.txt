@@ -426,3 +426,176 @@ Programação Orientada A Objetos (POO): É um estilo de programação. ABstrai 
             def __del__(self): 
                 pode ter alterações 
             del cao 
+        
+        - Herança: 
+            - Herança em POO: Capacidade da classe filha em derivar ou herdar as características e comportamentos da classe mãe. 
+                Iremos extender uma classe mãe para sua filha. 
+
+                class A: 
+                    pass //Só para nn declarar nenhum argumento e não dar erro 
+                
+                class B(A):--> Aqui temos a extensão como B extends A 
+                    pass
+            
+            - Herança Simples: Quando uma classe filha herda apenas de UMA classe mãe. 
+            - Herança Múltipla: Quando uma classe filha herda de várias classes mãe. 
+
+                class C(A,B): 
+                    pass 
+        
+        - Encapsulamento: 
+            - O que é? Descreve a ideia de agrupar dados e métodos que manipulam dados em um uma unidade. Desse modo, 
+            , por meio do mesmo, temos a habilidade de impor restrições ao acesso direto a variáveis e métodos, evitando
+            possíveis modificações acidentais. Nesse caso, apenas o método do objeto altera valor de variável. 
+            - Tipos: **Java possui 4 tipos 
+                - Público: Qualquer classe pode acessá-lo. 
+                - Privavdo: Pode ser apenas acessado por sua classe. 
+            ** Todos os recursos são públicos, menos quando seu nome se inicia com _. (Convenção)
+
+                class Conta: 
+                    def __init__(self, saldo=0):
+                        self._saldo = saldo 
+                    def depositar(self, valor):
+                        pass 
+
+            - Property()/@property:
+                - Te possibilita a criação de atributos gerenciados em sua classe. Com getters e setters para apenas a sua classe. 
+
+                    class Circle:
+                        def __init__(self, radius):
+                            self._radius = radius  # Convention for "protected" attribute
+
+                        @property
+                        def radius(self):
+                            """The radius property."""
+                            return self._radius
+
+                        @radius.setter
+                        def radius(self, value):
+                            if value < 0:
+                                raise ValueError("Radius cannot be negative")
+                            self._radius = value
+
+                        @radius.deleter
+                        def radius(self):
+                            del self._radius
+
+                        # Usage
+                        c = Circle(5)
+                        print(c.radius)  # Calls the getter
+                        c.radius = 10    # Calls the setter
+                        print(c.radius)
+                        # del c.radius   # Calls the deleter
+            
+        
+        - Polimorfismo: Significa mesmo nome de função, mas assinaturas diferentes. Sendo utilizado para tipos diferentes. 
+            Ou seja, dependendo do tipo da instância, teremos resultados diferentes, se adaptando a origem dele. ((Ex: Função len()))
+            **Só ocorre com herança
+            - Com herança: Quando ocorre uma herança, que envolve classe mãe-filha. Podemos modificar um método da classe mãe na classe filha, 
+            de modo, adaptá-lo da melhor forma àquele objeto. Precisamos apenas definir o mesmo método com as mesmas assinaturas. 
+                    class Animal:
+                        def speak(self):
+                            return "This is a generic animal sound."
+
+                    class Dog(Animal):
+                        def speak(self):
+                            return "Woof!"
+
+                    class Cat(Animal):
+                        def speak(self):
+                            return "Meow!"
+
+                    # Demonstrating polymorphism
+                    animals = [Animal(), Dog(), Cat()]
+
+                    for animal in animals:
+                        print(animal.speak())
+
+        - Variáveis de Instância X De Classe: 
+            - Atributos de classe são compartilhados entre objetos, enquanto atributos de instância são distintos para 
+            cada objeto (cada objeto tem um cópia delas). Resumindo, variáveis de instância são as definidas no construtor. 
+
+            class Carro:
+                numero_de_rodas = 4  # Variável de classe
+
+                def __init__(self, marca, modelo):
+                    self.marca = marca  # Variável de instância
+                    self.modelo = modelo  # Variável de instância
+
+                def detalhes(self):
+                    print(f"Marca: {self.marca}, Modelo: {self.modelo}, Rodas: {Carro.numero_de_rodas}")
+
+            # Criando instâncias
+            carro1 = Carro("Toyota", "Corolla")
+            carro2 = Carro("Honda", "Civic")
+
+            # Acessando variáveis
+            print(f"Rodas do carro1: {carro1.numero_de_rodas}")  # Acessando por instância
+            print(f"Rodas do carro2: {carro2.numero_de_rodas}")  # Acessando por instância
+            print(f"Rodas da classe: {Carro.numero_de_rodas}")  # Acessando por classe
+
+            carro1.detalhes()
+
+        
+        - Tipos de método: 
+            - Classe(@classmethod): Estão ligado à classe e não ao objeto. Têm acesso ao estado da classe, pois recebem parâmetro que aponta
+            para classe e não para uma instância do objeto. 
+            - Estático(@staticmethod): Também vinculado á classe, ele dispensa o argumento self ou cls. Não modifica ou acessa o estado da classe. 
+                --> Método Estático = Funções utilitárias
+                class Pessoa:
+                    populacao = 0  # atributo da classe
+
+                    def __init__(self, nome):
+                        self.nome = nome
+                        Pessoa.populacao += 1
+
+                    @classmethod
+                    def total_pessoas(cls):
+                        # cls faz referência à própria classe Pessoa
+                        return f'Total de pessoas: {cls.populacao}'
+
+                    @staticmethod
+                    def saudacao():
+                        # não acessa nem o estado da instância (self) nem da classe (cls)
+                        return 'Olá! Seja bem-vindo(a)!'
+
+                # Criando instâncias
+                p1 = Pessoa("Ana")
+                p2 = Pessoa("João")
+
+                # Chamando método de classe
+                print(Pessoa.total_pessoas())  # Total de pessoas: 2
+
+                # Chamando método estático
+                print(Pessoa.saudacao())       # Olá! Seja bem-vindo(a)!
+
+        - Classes Abstratas: Também chamadas de ABC (Abstract Base Classes), serve the modelo para outras classes. Não podendo ser instanciada, apenas
+            utilizada como modelo. Al´´em disso, contém métodos abstratos que deverão ser declarados por outras classes que forem a utilizar. 
+            Utilizaremos a palavra 'pass'como placeholder e @abstractmethod como o definidor do método abstrato. 
+
+            from abc import ABC, abstractmethod 
+
+            class Vehicle(ABC): **ABC define classe como abstrata 
+                @abstractmethod
+                def start_engine(self):
+                    pass
+
+                @abstractmethod
+                def stop_engine(self):
+                    pass
+
+            class Car(Vehicle):
+                def start_engine(self):
+                    print("Car engine started.")
+
+                def stop_engine(self):
+                    print("Car engine stopped.")
+
+            # Attempting to instantiate Vehicle will raise a TypeError
+            # vehicle = Vehicle()
+
+            my_car = Car()
+            my_car.start_engine()
+            my_car.stop_engine()
+        
+        - Interfaces: 
