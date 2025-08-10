@@ -425,7 +425,7 @@ Programação Orientada A Objetos (POO): É um estilo de programação. ABstrai 
         gerenciamento de memória. Para declarar esse método utilizamos a paralavra '__del__':
             def __del__(self): 
                 pode ter alterações 
-            del cao 
+            del cao -> Realiza operação de deleção da instância
         
         - Herança: 
             - Herança em POO: Capacidade da classe filha em derivar ou herdar as características e comportamentos da classe mãe. 
@@ -598,4 +598,48 @@ Programação Orientada A Objetos (POO): É um estilo de programação. ABstrai 
             my_car.start_engine()
             my_car.stop_engine()
         
-        - Interfaces: 
+        - Interfaces: define padrões a serem, obrigatoriamente, definidos por todas as classes que a usarem como base. 
+        Aqui dizemos que existe um "contrato de métodos". Não existe nativamente, iremos ver exemplo com ducktyping e protocols.
+        Utilizamos classes abstratas para fazer os contratos. 
+        
+            com Protocol: não força em tempo de execução, ferramentas como mypy conseguem verificar isso (Adicionar!!)
+
+            from typing import Protocol
+
+            class Forma(Protocol):
+                def area(self) -> float: ...
+                def perimetro(self) -> float: ...
+
+
+            class Retangulo:
+                def __init__(self, largura, altura):
+                    self.largura = largura
+                    self.altura = altura
+
+                def area(self) -> float:
+                    return self.largura * self.altura
+
+                def perimetro(self) -> float:
+                    return 2 * (self.largura + self.altura)
+
+
+            def mostrar_dados(f: Forma):
+                print("Área:", f.area())
+                print("Perímetro:", f.perimetro())
+
+
+            r = Retangulo(3, 4)
+            mostrar_dados(r)  # funciona, mesmo sem herdar de Forma
+
+            com duck typing puro: 
+                class Quadrado:
+                    def __init__(self, lado):
+                        self.lado = lado
+
+                    def area(self):
+                        return self.lado ** 2
+
+                def mostrar_area(figura):
+                    print("Área:", figura.area())
+
+                mostrar_area(Quadrado(5))  # Aceito se tiver método area()
