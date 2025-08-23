@@ -643,3 +643,135 @@ Programação Orientada A Objetos (POO): É um estilo de programação. ABstrai 
                     print("Área:", figura.area())
 
                 mostrar_area(Quadrado(5))  # Aceito se tiver método area()
+
+Decoradores: 
+    - Inner functions: é possível definir funções dentro de outras funções, as chamadas funções
+    internas. 
+        def pai():
+            print("djasd")
+            def filho1(): 
+                print("dkasjdk")
+            filho1()
+    
+    - Retornando funções: Em pyhton, é possível que funções sejam retornadas por outras funções. 
+        def calcula(operacao)
+            def somar(a,b):
+                return a + B
+            def subtrair(a,b):
+                return a - B
+            if operacao == "+"
+                return somar
+            else: 
+                return subtrair
+        resultado = calcular("+")(1,3) ==> somar(1,3)
+        print(resultado) ==> 4
+    
+    - Decorador simples: 
+        def meu_decorador(funcao):
+            def envelope():
+                print()
+                funcao()
+                print()
+            return envelope
+        def ola_mundo():
+            print("Ola mundo")
+
+        ola_mundo = meu_decorador(ola_mundo) --> Passamos uma função por parâmetro
+        ola_mundo()
+
+        OUUU podemos usar apenas o símbolo '@nome_da_funcao_que_aceita_funcao_como_parametro' para simplificar
+
+        def meu_decorador(funcao):
+            def envelope():
+                print()
+                funcao()
+                print()
+            return envelope
+        @meu_decorador
+        def ola_mundo():
+            print("Ola mundo")
+
+        ola_mundo()
+    
+    - Funções de decoração com argumentos: Podemos usar *args e **kwargs na função interna, com isso 
+    ela aceitará um número arbitrário de argumentos posicionais e de palavras-chave. 
+
+    def duplicar(func):
+        def envelope(*args, **kwargs):
+            func(*args,**kwargs)
+            func(*args,**kwargs)
+        return envelope
+    
+    @duplicar
+        
+    - Retornando valores de funções decoradas: podemos decidir entre retornar o valor da função decorada
+    ou não. Para que o valor seja retornando a função de envelope deve retornar o valor da função decorada. 
+        
+        def duplicar(func): 
+            def envelope(*args, **kwargs): 
+                func(*args, **kwargs)
+                return func(*args, **kwargs)
+            return envelope 
+
+        @duplicar
+        def aprender(tecnologia): 
+            print(f"Estou aprendendo {tecnologia}")
+            return tecnologia.upper()
+        
+        tecnologia = aprender("Python")
+        print(tecnologia)
+        
+
+    - Instrospecção: É a capacidade de um objeto saber sobre seus próprios atributos em tempo de execução. 
+
+        import functools 
+
+        def duplicar(func):
+            @functools.wraps(func)
+            def envelope(*args, **kwargs):
+                func(*args, **kwargs)
+                return func(*args, **kwargs)
+            return envelope 
+        
+        @duplicar
+        def aprender(tecnologia):
+            print(f"Estou aprendendo {tecnologia}")
+            return tecnologia.upper()
+        
+        tecnologia = aprender("Python")
+        print(tecnologia)
+
+Iteradores e Geradores: 
+    Iterador: Objeto que contém um número contável de valores que podem ser iterados, de modo a percorrer todos
+    os valores. Podemos fazer isso através de "__iter__()" e "__next__()". 
+    - Funções: ler arquivos grandes e iterar linha a linha do arquivo. 
+    - Exemplo: 
+
+            class FileIterator: 
+                def __init__(self,filename):
+                    self.file = open(filename)
+                
+                def __iter__(self): 
+                    return self
+                
+                def __next__(self):
+                    line = self.file.readLine()
+                    if line != '':
+                        return line 
+                    else:
+                        self.file.close()
+                        raise StopIteration 
+                    
+            #Uso 
+                for line in FileIterator('large_file.txt)
+                    print(line)
+    
+    Gerador: São tipos especiais de iteradores, ao contrário das listas ou outro iteráveis, não armazenam todos os seus 
+    valores na memória. São definidos usando funções regulares, mas, ao invés de retornam valores usando 'return', utilizam 
+    'yield'. 
+        - Uma vez que um item gerado é consumido, ele não pode ser acessado novamente. 
+        - Estado interno de um gerador é mantido entre chamadas. 
+        - A execução de um gerador é pausada na declaração 'yield' e retomada daí na próxima vez que ele for chamado. 
+
+
+    
