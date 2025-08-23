@@ -1,35 +1,69 @@
- #1 Instalar pyenv e iniciar o espaço virtual: 
->>Iniciar espaço: python -m venv workoutapip (python -m venv [nome da api])
->>Conferir se ele existe: workoutapip\Scripts\activate.bat
->>Ativar espaço: workoutapip\Scripts\activate
+# Passo a passo para confeccionar o projeto FastAPI completo
 
- #2 Instalar pacotes básicos 
->> pip install fastapi uvicorn sqlalchemy pydantic
-    # Sobre os pacotes:
-    - **fastapi**: framework moderno e rápido para criar APIs web em Python, com suporte a tipagem, validação automática e documentação interativa.
-    - **uvicorn**: servidor ASGI leve e rápido, usado para rodar aplicações FastAPI em produção ou desenvolvimento.
-    - **sqlalchemy**: biblioteca de ORM (Object Relational Mapper) que facilita a comunicação entre Python e bancos de dados relacionais, permitindo manipular dados como objetos.
-    - **pydantic**: biblioteca para validação de dados e criação de modelos baseados em tipos Python, muito usada no FastAPI para garantir dados corretos nas requisições e respostas.
+1. Crie uma pasta para o projeto (ex: API_Docker_Python_FastAPI) e acesse-a pelo terminal/cmd.
 
-
-#3 Criar arquivos .py em workout_api e acessar a pasta. E nela, rode:
->> uvicorn workout_api.main:app --reload
-     # Isso vai iniciar o servidor FastAPI. Acesse http://127.0.0.1:8000/docs para ver a documentação interativa.
-
-# Passo a passo completo para criar e rodar a API:
-1. Crie um ambiente virtual na raiz do projeto:
+2. Crie um ambiente virtual:
     ```cmd
     python -m venv workoutapip
     ```
-2. Ative o ambiente virtual:
+
+3. Ative o ambiente virtual:
     ```cmd
     workoutapip\Scripts\activate
     ```
-3. Instale os pacotes necessários:
+
+4. Instale as dependências principais:
     ```cmd
-    pip install fastapi uvicorn sqlalchemy pydantic
+    pip install fastapi uvicorn sqlalchemy pydantic pydantic-settings asyncpg python-dotenv
     ```
-4. Estruture o projeto criando a pasta `workout_api` e os arquivos principais (`main.py`, `routers.py`, etc). Exemplo de main.py:
+
+5. Crie a estrutura de pastas e arquivos:
+    - workout_api/ (pasta principal do app)
+      - __init__.py
+      - main.py
+      - routers.py
+      - atleta/ (módulo)
+            - __init__.py
+            - controller.py
+            - models.py
+            - schemas.py
+      - categorias/ (módulo)
+            - __init__.py
+            - controller.py
+            - models.py
+            - schemas.py
+      - centro_treinamento/ (módulo)
+            - __init__.py
+            - controller.py
+            - models.py
+            - schemas.py
+      - configs/
+            - __init__.py
+            - database.py
+            - settings.py
+      - contrib/
+            - __init__.py
+            - dependencies.py
+            - models.py
+            - schemas.py
+            - repository/
+                 - __init__.py
+                 - models.py
+
+6. Importe e registre os routers em workout_api/routers.py, por exemplo:
+    ```python
+    from fastapi import APIRouter
+    from workout_api.atleta.controller import router as atleta
+    from workout_api.categorias.controller import router as categorias
+    from workout_api.centro_treinamento.controller import router as centro_treinamento
+
+    api_router = APIRouter()
+    api_router.include_router(atleta, prefix='/atletas', tags=['atletas'])
+    api_router.include_router(categorias, prefix='/categorias', tags=['categorias'])
+    api_router.include_router(centro_treinamento, prefix='/centros_treinamento', tags=['centros_treinamento'])
+    ```
+
+7. Crie o arquivo workout_api/main.py:
     ```python
     from fastapi import FastAPI
     from workout_api.routers import api_router
@@ -41,25 +75,146 @@
          import uvicorn
          uvicorn.run('workout_api.main:app', host='0.0.0.0', port=8000, log_level='info', reload=True)
     ```
-5. Para rodar o servidor, estando na pasta do projeto, execute:
+
+8. Para rodar o servidor, sempre execute na pasta do projeto:
     ```cmd
     uvicorn workout_api.main:app --reload
     ```
-    # O parâmetro --reload reinicia o servidor automaticamente ao salvar alterações.
-6. Acesse a documentação interativa em:
+
+9. Acesse a documentação interativa em:
     http://127.0.0.1:8000/docs
 
-# Dicas:
-- O comando `uvicorn main:app --reload` só funciona se você estiver dentro da pasta workout_api. O mais seguro é sempre usar o caminho completo do módulo: `uvicorn workout_api.main:app --reload`.
-- O Makefile pode ser usado para facilitar o comando de execução. Corrija o Makefile para:
-  ```makefile
-  run:
-  	@uvicorn workout_api.main:app --reload
-  ```
-- Para adicionar novos módulos (ex: atleta, centro_treinamento), crie as pastas e arquivos necessários e inclua os routers em `routers.py`.
+10. Para facilitar, crie um Makefile com:
+    ```makefile
+    run:
+    	@uvicorn workout_api.main:app --reload
+    ```
+    E rode com:
+    ```cmd
+    make run
+    ```
 
- #4 Acesse http://127.0.0.1:8000/docs
- #5 Crie um makefile e rodar make run
- #6 Criar schemas com base no diagrama
- #7 Criar pasta atleta
- >> Arquivo __init__.py e schemas.py
+11. Para adicionar novos módulos, crie a pasta e os arquivos necessários e registre o router em routers.py.
+
+12. Use arquivos .env e python-dotenv para variáveis de ambiente, se necessário.
+
+13. Instale outros pacotes conforme a necessidade do projeto.
+
+14. Sempre ative o ambiente virtual antes de rodar ou instalar pacotes.
+
+15. Consulte a documentação oficial do FastAPI para exemplos e melhores práticas: https://fastapi.tiangolo.com/
+# Guia rápido: Projeto FastAPI com Estrutura Profissional
+
+## 1. Ambiente Virtual
+1.1. Crie o ambiente virtual:
+    ```cmd
+    python -m venv workoutapip
+    ```
+1.2. Ative o ambiente virtual:
+    ```cmd
+    workoutapip\Scripts\activate
+    ```
+
+## 2. Instalação de Dependências
+2.1. Instale os pacotes essenciais:
+    ```cmd
+    pip install fastapi uvicorn sqlalchemy pydantic pydantic-settings asyncpg python-dotenv
+    ```
+2.2. Sobre os pacotes:
+    - **fastapi**: Framework moderno para APIs web.
+    - **uvicorn**: Servidor ASGI rápido para rodar FastAPI.
+    - **sqlalchemy**: ORM para bancos relacionais.
+    - **pydantic**: Validação de dados e modelos.
+    - **pydantic-settings**: Configuração baseada em variáveis de ambiente.
+    - **asyncpg**: Driver assíncrono para PostgreSQL.
+    - **python-dotenv**: Carrega variáveis de ambiente de arquivos .env.
+
+## 3. Estrutura de Pastas Recomendada
+```
+workout_api/
+    __init__.py
+    main.py
+    routers.py
+    atleta/
+        __init__.py
+        controller.py
+        models.py
+        schemas.py
+    categorias/
+        __init__.py
+        controller.py
+        models.py
+        schemas.py
+    centro_treinamento/
+        __init__.py
+        controller.py
+        models.py
+        schemas.py
+    configs/
+        __init__.py
+        database.py
+        settings.py
+    contrib/
+        __init__.py
+        dependencies.py
+        models.py
+        schemas.py
+        repository/
+            __init__.py
+            models.py
+```
+
+## 4. Configuração dos Routers
+No arquivo `workout_api/routers.py`:
+```python
+from fastapi import APIRouter
+from workout_api.atleta.controller import router as atleta
+from workout_api.categorias.controller import router as categorias
+from workout_api.centro_treinamento.controller import router as centro_treinamento
+
+api_router = APIRouter()
+api_router.include_router(atleta, prefix='/atletas', tags=['atletas'])
+api_router.include_router(categorias, prefix='/categorias', tags=['categorias'])
+api_router.include_router(centro_treinamento, prefix='/centros_treinamento', tags=['centros_treinamento'])
+```
+
+## 5. Arquivo principal (main.py)
+```python
+from fastapi import FastAPI
+from workout_api.routers import api_router
+
+app = FastAPI(title='WorkoutApi')
+app.include_router(api_router)
+
+if __name__ == '__main__':
+    import uvicorn
+    uvicorn.run('workout_api.main:app', host='0.0.0.0', port=8000, log_level='info', reload=True)
+```
+
+## 6. Executando o Servidor
+6.1. Na raiz do projeto, rode:
+    ```cmd
+    uvicorn workout_api.main:app --reload
+    ```
+6.2. Acesse a documentação interativa:
+    http://127.0.0.1:8000/docs
+
+## 7. Makefile (opcional)
+Para facilitar, crie um Makefile:
+```makefile
+run:
+	@uvicorn workout_api.main:app --reload
+```
+E rode com:
+```cmd
+make run
+```
+
+## 8. Expansão e Dicas
+- Para novos módulos, crie a pasta e arquivos e registre o router em routers.py.
+- Use arquivos .env para variáveis de ambiente sensíveis.
+- Sempre ative o ambiente virtual antes de instalar pacotes ou rodar o servidor.
+- Consulte a documentação oficial: https://fastapi.tiangolo.com/
+
+---
+Esse guia cobre do zero até a execução e expansão do seu projeto FastAPI!
