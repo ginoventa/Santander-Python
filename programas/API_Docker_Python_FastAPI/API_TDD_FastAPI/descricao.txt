@@ -1,0 +1,78 @@
+
+# FastAPI
+
+FastAPI é um framework web moderno, rápido (alta performance) e fácil de usar para a construção de APIs com Python 3.6+.
+Ele é fácil de aprender, fácil de codar e pronto para produção, sendo muito utilizado para microserviços, APIs RESTful e aplicações modernas. Baseia-se nos type hints padrões do Python, permitindo validação automática de dados e documentação interativa.
+
+Principais características:
+- Alta performance (um dos frameworks Python mais rápidos)
+- Baseado em Python type hints, com validação automática de dados
+- Gera documentação automática (Swagger/OpenAPI e ReDoc) para suas rotas
+- Suporte nativo a async/await (código assíncrono), ideal para aplicações de alta performance
+- Integração fácil com bancos de dados, autenticação, OAuth2, JWT, CORS, etc.
+- Pronto para produção
+
+Principais características:
+- Alta performance (um dos frameworks Python mais rápidos)
+- Fácil de aprender e usar
+- Gera documentação automática (Swagger/OpenAPI e ReDoc)
+- Suporte nativo a async/await (código assíncrono)
+- Pronto para produção
+
+## Async
+Código assíncrono significa que a linguagem/programa pode esperar por algo (como resposta de rede ou banco) sem travar o restante do sistema. O FastAPI suporta async/await nativamente, permitindo APIs mais rápidas e escaláveis.
+
+## Projeto: WorkoutAPI
+WorkoutAPI é uma API de competição de crossfit, unindo programação e treino. É um projeto hands-on e simplificado, com poucas tabelas, focado em ensinar o uso do FastAPI.
+
+## Modelagem de Entidade e Relacionamento (MER)
+O projeto utiliza um MER para organizar as entidades e seus relacionamentos.
+
+## Stack da API
+- FastAPI (async)
+- Alembic
+- SQLAlchemy
+- Pydantic
+- PostgreSQL (via Docker)
+
+## Execução da API
+O projeto utiliza pyenv com Python 3.11.4 para o ambiente virtual.
+
+### Passos para executar:
+1. (Opcional) Criar ambiente virtual com pyenv:
+	```sh
+	pyenv virtualenv 3.11.4 workoutapi
+	pyenv activate workoutapi
+	pip install -r requirements.txt
+	```
+2. Subir o banco de dados (requer docker-compose):
+	```sh
+	make run-docker
+	```
+3. Criar uma migration nova:
+	```sh
+	make create-migrations d="nome_da_migration"
+	```
+4. Criar o banco de dados:
+	```sh
+	make run-migrations
+	```
+5. Subir a API:
+	```sh
+	make run
+	```
+	Acesse: http://127.0.0.1:8000/docs
+
+## Desafio Final
+- Adicionar query parameters nos endpoints:
+	- atleta: nome, cpf
+- Customizar response de retorno de endpoints:
+	- get all atleta: nome, centro_treinamento, categoria
+- Manipular exceção de integridade dos dados em cada módulo/tabela:
+	- sqlalchemy.exc.IntegrityError → mensagem: “Já existe um atleta cadastrado com o cpf: x”
+	- status_code: 303
+- Adicionar paginação utilizando a lib fastapi-pagination:
+	- limit e offset
+
+## Referências
+

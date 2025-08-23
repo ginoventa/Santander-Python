@@ -1256,9 +1256,84 @@ Iteradores e Geradores:
         r = requests.post('https://api.exemplo.com/usuarios', json={'nome': 'Ana'})
         print(r.status_code)
     - Status comuns:
-        * 200 OK: sucesso
-        * 201 Created: recurso criado
-        * 400 Bad Request: erro na requisição
-        * 401 Unauthorized: não autorizado
-        * 404 Not Found: não encontrado
-        * 500 Internal Server Error: erro no servidor
+                * 200 OK: sucesso
+                * 201 Created: recurso criado
+                * 400 Bad Request: erro na requisição
+                * 401 Unauthorized: não autorizado
+                * 404 Not Found: não encontrado
+                * 500 Internal Server Error: erro no servidor
+
+## Docker
+1. O que é Docker?
+        - Docker é uma plataforma para criar, empacotar, distribuir e executar aplicações em containers.
+        - Containers são ambientes isolados que garantem que o software rode da mesma forma em qualquer lugar (desenvolvimento, teste, produção).
+        - Vantagens: portabilidade, isolamento, fácil escalabilidade, reprodutibilidade de ambientes.
+
+2. Conceitos principais
+        - Imagem: blueprint (modelo) imutável de um container. Ex: imagem do Python, PostgreSQL, sua aplicação, etc.
+        - Container: instância em execução de uma imagem.
+        - Dockerfile: arquivo de instruções para construir uma imagem personalizada.
+        - Docker Hub: repositório público de imagens prontas.
+
+3. Comandos básicos
+        - `docker pull <imagem>`: baixa uma imagem do Docker Hub.
+        - `docker run <imagem>`: executa um container a partir de uma imagem.
+        - `docker ps`: lista containers em execução.
+        - `docker ps -a`: lista todos containers (inclusive parados).
+        - `docker stop <container>`: para um container.
+        - `docker rm <container>`: remove um container.
+        - `docker rmi <imagem>`: remove uma imagem.
+        - `docker images`: lista imagens baixadas.
+
+4. Exemplo de Dockerfile para aplicação Python
+        ```Dockerfile
+        # Usa imagem oficial do Python
+        FROM python:3.11
+        # Define diretório de trabalho
+        WORKDIR /app
+        # Copia arquivos do projeto
+        COPY . .
+        # Instala dependências
+        RUN pip install -r requirements.txt
+        # Comando padrão ao iniciar o container
+        CMD ["python", "main.py"]
+        ```
+
+5. Construindo e rodando sua imagem
+        - Para construir: `docker build -t minha-app .`
+        - Para rodar: `docker run -it --rm minha-app`
+
+6. Docker Compose
+        - Ferramenta para orquestrar múltiplos containers (ex: app + banco de dados).
+        - Exemplo de docker-compose.yml:
+        ```yaml
+        version: '3.8'
+        services:
+            db:
+                image: postgres:15
+                environment:
+                    POSTGRES_USER: user
+                    POSTGRES_PASSWORD: senha
+                    POSTGRES_DB: meu_banco
+                ports:
+                    - "5432:5432"
+            app:
+                build: .
+                depends_on:
+                    - db
+                ports:
+                    - "8000:8000"
+        ```
+        - Para subir tudo: `docker-compose up`
+        - Para parar: `docker-compose down`
+
+7. Boas práticas
+        - Sempre use .dockerignore para evitar copiar arquivos desnecessários para a imagem.
+        - Mantenha imagens pequenas (apenas o necessário).
+        - Use variáveis de ambiente para configurações sensíveis.
+        - Prefira volumes para persistir dados de bancos.
+
+8. Recursos úteis
+        - Documentação oficial: https://docs.docker.com/
+        - Docker Hub: https://hub.docker.com/
+        - Play with Docker (ambiente online): https://labs.play-with-docker.com/
