@@ -772,6 +772,493 @@ Iteradores e Geradores:
         - Uma vez que um item gerado é consumido, ele não pode ser acessado novamente. 
         - Estado interno de um gerador é mantido entre chamadas. 
         - A execução de um gerador é pausada na declaração 'yield' e retomada daí na próxima vez que ele for chamado. 
+        - Funções geradoras são declaradas normalmente, mas usam 'yield' para produzir valores um a um.
+        - Para obter valores de um gerador, usamos next() ou um loop for.
+        - Geradores são úteis para trabalhar com grandes volumes de dados ou fluxos infinitos.
+        - Exemplo prático:
+            def contador(max):
+                n = 0
+                while n < max:
+                    yield n
+                    n += 1
+            # Uso:
+            for numero in contador(5):
+                print(numero)  # Saída: 0 1 2 3 4
+
+        - Também é possível criar geradores com expressões geradoras:
+            quadrados = (x*x for x in range(5))
+            for q in quadrados:
+                print(q)  # Saída: 0 1 4 9 16
+
+        - Vantagens dos geradores:
+            * Economizam memória, pois produzem valores sob demanda.
+            * Permitem criar pipelines de processamento de dados.
+            * Podem ser infinitos (ex: gerador de números primos, Fibonacci, etc).
+
+        - Diferença entre função normal e geradora:
+            * Função normal retorna um valor e encerra.
+            * Função geradora pode pausar e continuar, retornando vários valores ao longo do tempo.
 
 
+##Pacotes
+1. Data, hora e fuso horário: 
+    O módulo datetime é o principal para manipulação de datas e horas em Python.
+    Permite criar, comparar, formatar e converter datas e horários, além de trabalhar com fusos horários.
+
+    Principais classes:
+        - datetime.date: representa apenas a data (ano, mês, dia)
+        - datetime.time: representa apenas o horário (hora, minuto, segundo, microssegundo)
+        - datetime.datetime: representa data e hora juntos
+        - datetime.timedelta: representa a diferença entre datas/horas
+        - datetime.timezone: representa informações de fuso horário
+
+    Exemplos de uso:
+        import datetime
+
+        # Data atual
+        hoje = datetime.date.today()
+        print(hoje)  # Ex: 2025-08-23
+
+        # Data e hora atual
+        agora = datetime.datetime.now()
+        print(agora)  # Ex: 2025-08-23 14:30:00.123456
+
+        # Criando datas e horas específicas
+        data = datetime.date(2023, 12, 25)
+        horario = datetime.time(14, 30, 0)
+        dt = datetime.datetime(2023, 12, 25, 14, 30, 0)
+
+        # Formatando datas e horas (str -> data/hora e vice-versa)
+        data_str = '2025-08-23 15:00:00'
+        dt_obj = datetime.datetime.strptime(data_str, '%Y-%m-%d %H:%M:%S')
+        print(dt_obj)
+        print(dt_obj.strftime('%d/%m/%Y %H:%M'))  # 23/08/2025 15:00
+
+        # Diferença entre datas
+        d1 = datetime.date(2025, 8, 23)
+        d2 = datetime.date(2025, 8, 20)
+        delta = d1 - d2
+        print(delta.days)  # 3
+
+        # Adicionando/subtraindo datas
+        nova_data = d1 + datetime.timedelta(days=10)
+        print(nova_data)  # 2025-09-02
+
+        # Trabalhando com fuso horário
+        from datetime import timezone, timedelta
+        fuso_brasilia = timezone(timedelta(hours=-3))
+        agora_brasilia = datetime.datetime.now(fuso_brasilia)
+        print(agora_brasilia)
+
+    Observações:
+        - O módulo datetime é robusto e cobre a maioria das necessidades de manipulação de datas/horas.
+        - Para fusos horários mais avançados, pode-se usar a biblioteca externa pytz.
     
+2. Manipulando arquivos em Python
+    Em Python, a manipulação de arquivos é feita principalmente com a função open().
+    É possível ler, escrever, criar e modificar arquivos de texto e binários.
+
+    Modos de abertura:
+        - 'r': leitura (padrão)
+        - 'w': escrita (cria novo arquivo ou sobrescreve)
+        - 'a': append (adiciona ao final do arquivo)
+        - 'x': cria novo arquivo, erro se já existir
+        - 'b': modo binário (ex: 'rb', 'wb')
+        - 't': modo texto (padrão)
+        - '+': leitura e escrita
+
+    Exemplo básico de leitura:
+        with open('arquivo.txt', 'r') as f:
+            conteudo = f.read()
+            print(conteudo)
+
+    Exemplo de escrita:
+        with open('saida.txt', 'w') as f:
+            f.write('Olá, mundo!\n')
+
+    Exemplo de leitura linha a linha:
+        with open('arquivo.txt', 'r') as f:
+            for linha in f:
+                print(linha.strip())
+
+    Exemplo de adicionar conteúdo (append):
+        with open('log.txt', 'a') as f:
+            f.write('Nova linha de log\n')
+
+    Leitura e escrita em arquivos binários:
+        with open('imagem.png', 'rb') as f:
+            dados = f.read()
+        with open('copia.png', 'wb') as f:
+            f.write(dados)
+
+    Métodos úteis:
+        - read(): lê todo o conteúdo
+        - readline(): lê uma linha
+        - readlines(): retorna lista de linhas
+        - write(): escreve string
+        - writelines(): escreve lista de strings
+
+    Boas práticas:
+        - Sempre usar with para abrir arquivos (garante fechamento automático)
+        - Tratar exceções com try/except para evitar erros em arquivos inexistentes
+        - Para arquivos grandes, prefira ler linha a linha
+
+    Exemplo de tratamento de erro:
+        try:
+            with open('dados.txt', 'r') as f:
+                print(f.read())
+        except FileNotFoundError:
+            print('Arquivo não encontrado!')
+
+    Observação:
+        - Para manipulação de arquivos CSV, use o módulo csv.
+        - Para arquivos JSON, use o módulo json.
+    
+3. Gerenciamento de pacotes e boas práticas, seguindo convenções da PEP 8.
+    Gerenciamento de pacotes:
+        - O Python utiliza o gerenciador de pacotes pip para instalar, atualizar e remover bibliotecas externas.
+        - Para instalar um pacote: pip install nome_do_pacote
+        - Para listar pacotes instalados: pip list
+        - Para atualizar um pacote: pip install --upgrade nome_do_pacote
+        - Para remover: pip uninstall nome_do_pacote
+        - Para projetos, recomenda-se criar um ambiente virtual (venv):
+            python -m venv venv
+            # Ativar no Windows: venv\Scripts\activate
+            # Ativar no Linux/Mac: source venv/bin/activate
+        - Para registrar dependências, use o arquivo requirements.txt:
+            pip freeze > requirements.txt
+            pip install -r requirements.txt
+
+    Boas práticas e PEP 8:
+        - PEP 8 é o guia oficial de estilo para código Python.
+        - Principais recomendações:
+            * Use 4 espaços por nível de indentação (não use tab).
+            * Linhas com no máximo 79 caracteres.
+            * Separe funções e classes com duas linhas em branco.
+            * Nome de variáveis e funções: snake_case (ex: minha_funcao)
+            * Nome de classes: CamelCase (ex: MinhaClasse)
+            * Constantes: MAIUSCULAS_SEPARADAS_POR_UNDERSCORE
+            * Imports devem ser feitos no início do arquivo, um por linha.
+            * Deixe dois espaços antes de comentários em linha.
+            * Use docstrings para documentar funções, classes e módulos.
+            * Evite espaços desnecessários dentro de parênteses, colchetes ou chaves.
+            * Use nomes descritivos para variáveis e funções.
+            * Sempre trate exceções de forma específica.
+        - Ferramentas úteis:
+            * flake8, pylint: analisadores de estilo e erros.
+            * black, autopep8: formatadores automáticos de código.
+        - Para mais detalhes, consulte: https://peps.python.org/pep-0008/
+    
+##Introdução Banco de Dados
+    Banco de Dados (BD) é uma coleção organizada de dados, geralmente acessados e manipulados por meio de um sistema de gerenciamento de banco de dados (DBMS).
+
+    1. DBMS (Database Management System):
+        - Software responsável por criar, gerenciar, manipular e proteger bancos de dados.
+        - Exemplos: MySQL, PostgreSQL, SQLite, Oracle, SQL Server.
+
+    2. Tipos de bancos de dados:
+        - Relacional: dados organizados em tabelas (linhas e colunas), com relações entre elas. Usa SQL.
+            Ex: MySQL, PostgreSQL, SQLite.
+        - Não relacional (NoSQL): dados em formatos flexíveis (documentos, chave-valor, grafos, colunas).
+            Ex: MongoDB (documentos), Redis (chave-valor), Neo4j (grafos).
+
+    3. SQL (Structured Query Language):
+        - Linguagem padrão para manipulação de bancos de dados relacionais.
+        - Principais comandos:
+            * SELECT: consulta dados
+            * INSERT: insere dados
+            * UPDATE: atualiza dados
+            * DELETE: remove dados
+            * CREATE: cria tabelas, bancos, etc.
+            * DROP: remove tabelas, bancos, etc.
+        - Exemplo:
+            CREATE TABLE clientes (
+                id INTEGER PRIMARY KEY,
+                nome TEXT NOT NULL,
+                idade INTEGER,
+                email TEXT
+            );
+            INSERT INTO clientes (nome, idade, email) VALUES ('Ana', 30, 'ana@email.com');
+            SELECT * FROM clientes WHERE idade > 25;
+
+    4. Tabelas e tipos de dados:
+        - Tabela: estrutura que armazena dados em linhas (registros) e colunas (campos).
+        - Tipos de dados comuns:
+            * INTEGER: números inteiros
+            * REAL/FLOAT: números decimais
+            * TEXT/VARCHAR: textos
+            * DATE: datas
+            * BOOLEAN: verdadeiro/falso
+
+    5. Conceitos importantes:
+        - Chave primária (PRIMARY KEY): identifica unicamente cada registro.
+        - Chave estrangeira (FOREIGN KEY): cria relação entre tabelas.
+        - Índices: aceleram buscas em colunas específicas.
+        - Normalização: processo de organizar dados para evitar redundância.
+
+    Observação:
+        - Bancos relacionais são ideais para dados estruturados e integridade referencial.
+        - Bancos NoSQL são indicados para dados flexíveis, grandes volumes ou alta performance.
+
+##Bancos de Dados
+1. Introdução aos bancos relacionais
+    - Bancos relacionais organizam dados em tabelas, com linhas (registros) e colunas (campos).
+    - SQL (Structured Query Language) é a linguagem padrão para manipulação desses bancos.
+    - MER (Modelo Entidade-Relacionamento): diagrama que representa entidades (tabelas), atributos (colunas) e relacionamentos.
+    - DER (Diagrama Entidade-Relacionamento): representação gráfica do MER.
+    - Configuração do ambiente: pode-se usar MySQL, PostgreSQL, SQLite, etc. SQLite é simples e não requer instalação.
+    - Exemplo de criação de tabela:
+        CREATE TABLE produtos (
+            id INTEGER PRIMARY KEY,
+            nome TEXT NOT NULL,
+            preco REAL
+        );
+
+2. Modelagem de dados relacionais
+    - Operações CRUD:
+        * CREATE: inserir dados (INSERT)
+        * READ: consultar dados (SELECT)
+        * UPDATE: atualizar dados (UPDATE)
+        * DELETE: remover dados (DELETE)
+    - Alterando e excluindo tabelas:
+        * ALTER TABLE: altera estrutura (adiciona/renomeia/retira colunas)
+        * DROP TABLE: exclui tabela
+    - Chaves primárias: identificam unicamente cada registro (PRIMARY KEY)
+    - Chaves estrangeiras: criam relações entre tabelas (FOREIGN KEY)
+    - Tabelas, colunas e registros: estrutura fundamental dos bancos relacionais
+    - Exemplo CRUD:
+        INSERT INTO produtos (nome, preco) VALUES ('Camiseta', 49.90);
+        SELECT * FROM produtos;
+        UPDATE produtos SET preco = 59.90 WHERE id = 1;
+        DELETE FROM produtos WHERE id = 1;
+
+3. Normalização de dados
+    - Processo de organizar dados para reduzir redundância e dependências.
+    - Normalização divide dados em múltiplas tabelas relacionadas.
+    - Formas normais (1FN, 2FN, 3FN): regras para garantir integridade e eficiência.
+    - Exemplo: separar clientes e endereços em tabelas distintas, ligadas por chave estrangeira.
+
+4. Consultas avançadas
+    - Índices: estruturas que aceleram buscas em colunas específicas (CREATE INDEX ...).
+    - Funções agregadas: realizam cálculos sobre conjuntos de registros (SUM, AVG, COUNT, MAX, MIN).
+        Exemplo: SELECT AVG(preco) FROM produtos;
+    - Agrupamento de resultados: GROUP BY permite agrupar registros e aplicar funções agregadas.
+        Exemplo: SELECT categoria, COUNT(*) FROM produtos GROUP BY categoria;
+    - Junções (JOIN): combinam dados de duas ou mais tabelas relacionadas.
+        * INNER JOIN: retorna registros com correspondência em ambas as tabelas
+        * LEFT JOIN: retorna todos os registros da tabela da esquerda e correspondentes da direita
+        Exemplo:
+            SELECT clientes.nome, pedidos.valor
+            FROM clientes
+            INNER JOIN pedidos ON clientes.id = pedidos.cliente_id;
+    - Subconsultas: SELECT dentro de outro SELECT, útil para filtros e cálculos complexos.
+        Exemplo: SELECT nome FROM produtos WHERE preco > (SELECT AVG(preco) FROM produtos);
+
+#Introdução ao NoSQL
+1. Conhecendo tipos de banco NoSQL
+    - NoSQL (Not Only SQL) são bancos de dados não relacionais, ideais para dados flexíveis, grandes volumes ou alta performance.
+    - Principais tipos:
+        * Documentos: armazenam dados em documentos (JSON/BSON). Ex: MongoDB, CouchDB.
+        * Chave-valor: cada item é um par chave-valor. Ex: Redis, DynamoDB.
+        * Colunar: dados organizados em colunas/famílias de colunas. Ex: Cassandra, HBase.
+        * Grafos: dados como vértices e arestas. Ex: Neo4j, ArangoDB.
+    - Vantagens: escalabilidade horizontal, flexibilidade de schema, alta performance para casos específicos.
+    - Desvantagens: menos integridade referencial, menos padronização de consultas.
+
+2. Introdução ao MongoDB e instalação
+    - MongoDB é o banco de documentos mais popular, armazena dados em documentos BSON (similar ao JSON).
+    - Instalação local: baixar de https://www.mongodb.com/try/download/community
+    - MongoDB Atlas (cloud): https://www.mongodb.com/cloud/atlas
+        * Permite criar clusters gratuitos para testes.
+    - Ferramentas úteis: MongoDB Compass (GUI), drivers para Python (pymongo), Node.js, etc.
+    - Exemplo de conexão com Python (pymongo):
+        from pymongo import MongoClient
+        client = MongoClient('mongodb://localhost:27017/')
+        db = client['meu_banco']
+        colecao = db['clientes']
+        colecao.insert_one({'nome': 'Ana', 'idade': 30})
+        for doc in colecao.find():
+            print(doc)
+
+3. Schema design e boas práticas
+    - NoSQL permite schemas flexíveis, mas é importante planejar a estrutura dos documentos.
+    - Boas práticas:
+        * Definir campos obrigatórios e opcionais.
+        * Usar tipos de dados consistentes.
+        * Evitar documentos muito grandes (16MB é o limite no MongoDB).
+        * Modelar para consultas frequentes (denormalização é comum).
+        * Usar referências entre coleções apenas quando necessário.
+    - JSON vs BSON:
+        * JSON: formato leve, fácil leitura, usado em APIs.
+        * BSON: formato binário, suporta mais tipos (datas, binários), usado internamente pelo MongoDB.
+
+4. Conceitos na prática
+    - Operações básicas (CRUD):
+        * Inserir: colecao.insert_one({'nome': 'João', 'idade': 25})
+        * Buscar: colecao.find({'idade': {'$gt': 20}})
+        * Atualizar: colecao.update_one({'nome': 'João'}, {'$set': {'idade': 26}})
+        * Remover: colecao.delete_one({'nome': 'João'})
+    - Índices:
+        * Melhoram performance de buscas. Ex: colecao.create_index('nome')
+        * Índices compostos: colecao.create_index([('nome', 1), ('idade', -1)])
+    - Agregações:
+        * Permitem processar e transformar dados em pipelines.
+        * Exemplo: contar clientes por idade:
+            colecao.aggregate([
+                {'$group': {'_id': '$idade', 'total': {'$sum': 1}}}
+            ])
+    - Performance:
+        * Use índices para campos consultados com frequência.
+        * Evite consultas que varrem toda a coleção.
+        * Monitore o tamanho dos documentos e coleções.
+    - Exemplo prático de pipeline de agregação:
+        pipeline = [
+            {'$match': {'idade': {'$gte': 18}}},
+            {'$group': {'_id': '$cidade', 'media_idade': {'$avg': '$idade'}}},
+            {'$sort': {'media_idade': -1}}
+        ]
+        for doc in colecao.aggregate(pipeline):
+            print(doc)
+
+#Explorando Banco de Dados Relacionais com Python DB API
+1. Introdução aos bancos de dados relacionais
+    - Bancos relacionais organizam dados em tabelas e usam SQL para manipulação.
+    - Python oferece suporte via DB API (PEP 249), padrão para conectar e manipular bancos relacionais.
+    - O módulo sqlite3 é embutido no Python e ideal para testes e projetos pequenos.
+
+2. Conectando com bancos de dados
+    - Para SQLite:
+        import sqlite3
+        conexao = sqlite3.connect('meubanco.db')  # Cria/abre arquivo de banco
+        cursor = conexao.cursor()
+    - Para outros bancos (MySQL, PostgreSQL), use bibliotecas como pymysql, psycopg2, etc.
+
+3. Criando uma tabela
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS clientes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL,
+            idade INTEGER,
+            email TEXT
+        )
+    ''')
+    conexao.commit()
+
+4. Inserindo, atualizando, consultando e removendo registros
+    # Inserir
+    cursor.execute('INSERT INTO clientes (nome, idade, email) VALUES (?, ?, ?)', ('Ana', 30, 'ana@email.com'))
+    conexao.commit()
+    # Consultar
+    cursor.execute('SELECT * FROM clientes')
+    for row in cursor.fetchall():
+        print(row)
+    # Atualizar
+    cursor.execute('UPDATE clientes SET idade = ? WHERE nome = ?', (31, 'Ana'))
+    conexao.commit()
+    # Remover
+    cursor.execute('DELETE FROM clientes WHERE nome = ?', ('Ana',))
+    conexao.commit()
+
+5. Inserindo registros em lote
+    dados = [
+        ('João', 25, 'joao@email.com'),
+        ('Maria', 28, 'maria@email.com')
+    ]
+    cursor.executemany('INSERT INTO clientes (nome, idade, email) VALUES (?, ?, ?)', dados)
+    conexao.commit()
+
+6. Alterando row-factory
+    - O row_factory permite customizar o formato dos resultados.
+    - Exemplo: retornar dicionários ao invés de tuplas.
+        conexao.row_factory = sqlite3.Row
+        cursor = conexao.cursor()
+        cursor.execute('SELECT * FROM clientes')
+        for row in cursor.fetchall():
+            print(dict(row))  # {'id': 1, 'nome': 'João', ...}
+
+7. Boas práticas
+    - Sempre feche conexões e cursores (use with ou try/finally).
+    - Use parâmetros (?) para evitar SQL injection.
+    - Trate exceções com try/except.
+    - Prefira transações para operações críticas.
+    - Exemplo de uso com with:
+        with sqlite3.connect('meubanco.db') as conexao:
+            cursor = conexao.cursor()
+            # ... operações ...
+
+8. Gerenciando transações
+    - Por padrão, sqlite3 faz autocommit após cada operação.
+    - Para transações manuais:
+        conexao.isolation_level = None  # Desativa autocommit
+        cursor.execute('BEGIN')
+        try:
+            # ... operações ...
+            cursor.execute('COMMIT')
+        except Exception:
+            cursor.execute('ROLLBACK')
+    - Use transações para garantir atomicidade em operações múltiplas.
+
+
+##Introdução ao Desenvolvimento Web
+1. Como a Web funciona
+    - A Web é baseada no modelo cliente-servidor: navegadores (clientes) enviam requisições para servidores web, que respondem com páginas ou dados.
+    - O protocolo HTTP (HyperText Transfer Protocol) é o principal meio de comunicação.
+    - Fluxo básico:
+        * Usuário digita uma URL no navegador.
+        * O navegador faz uma requisição HTTP para o servidor.
+        * O servidor processa e responde com HTML, CSS, JS ou dados (JSON/XML).
+        * O navegador renderiza a resposta para o usuário.
+
+2. Tecnologias front-end e back-end
+    - Front-end: parte visual/interativa da aplicação, executada no navegador.
+        * Tecnologias: HTML (estrutura), CSS (estilo), JavaScript (interatividade).
+        * Frameworks populares: React, Angular, Vue.js.
+    - Back-end: lógica de negócio, acesso a banco de dados, autenticação, etc. Executado no servidor.
+        * Tecnologias: Python (Django, Flask), Node.js, Java (Spring), PHP, Ruby, etc.
+        * Responsável por processar requisições, manipular dados e responder ao cliente.
+
+3. APIs e conceitos fundamentais
+    - API (Application Programming Interface): interface que permite comunicação entre sistemas.
+    - APIs Web expõem endpoints (URLs) para que clientes possam enviar/receber dados.
+    - Conceitos:
+        * Endpoint: URL que representa um recurso (ex: /clientes, /produtos).
+        * Request: requisição feita pelo cliente (método, cabeçalhos, corpo).
+        * Response: resposta do servidor (status, cabeçalhos, corpo).
+        * Status HTTP: códigos que indicam o resultado (200 OK, 404 Not Found, 500 Error, etc).
+
+4. Tipos de APIs - RESTful, SOAP e GraphQL
+    - RESTful:
+        * Baseada em recursos e verbos HTTP.
+        * URLs representam recursos, operações são feitas via métodos HTTP.
+        * Respostas geralmente em JSON.
+        * Simples, escalável e amplamente usada.
+    - SOAP:
+        * Protocolo mais antigo, baseado em XML.
+        * Estrutura rígida, usado em sistemas corporativos.
+        * Opera sobre HTTP, SMTP, etc.
+    - GraphQL:
+        * Permite ao cliente especificar exatamente quais dados deseja.
+        * Uma única URL para todas as operações.
+        * Respostas em JSON, flexível e eficiente para aplicações modernas.
+
+5. Verbos HTTP - GET, POST, PATCH, PUT e DELETE
+    - GET: recupera dados de um recurso (ex: buscar lista de usuários).
+    - POST: cria um novo recurso (ex: cadastrar usuário).
+    - PUT: atualiza um recurso inteiro (ex: substituir dados de um usuário).
+    - PATCH: atualiza parcialmente um recurso (ex: alterar só o email do usuário).
+    - DELETE: remove um recurso (ex: deletar usuário).
+    - Exemplo de requisições HTTP (usando requests em Python):
+        import requests
+        # GET
+        r = requests.get('https://api.exemplo.com/usuarios')
+        print(r.json())
+        # POST
+        r = requests.post('https://api.exemplo.com/usuarios', json={'nome': 'Ana'})
+        print(r.status_code)
+    - Status comuns:
+        * 200 OK: sucesso
+        * 201 Created: recurso criado
+        * 400 Bad Request: erro na requisição
+        * 401 Unauthorized: não autorizado
+        * 404 Not Found: não encontrado
+        * 500 Internal Server Error: erro no servidor
